@@ -22,9 +22,8 @@ func check(caracter string, wg *sync.WaitGroup) {
 }
 
 func code() {
-
 	var wg sync.WaitGroup
-
+	repetitions = 0
 	for _, c := range whereSearch {
 		wg.Add(1)
 		go check(string(c), &wg)

@@ -23,7 +23,7 @@ func check(caracter string, wg *sync.WaitGroup) {
 
 func main() {
 	defer timer("main")() //to see esecution time
-
+	repetitions = 0
 	var wg sync.WaitGroup
 
 	for _, c := range whereSearch {
