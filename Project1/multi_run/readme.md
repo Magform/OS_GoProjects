@@ -16,12 +16,13 @@ Now I try to run the code 10000 times with a random string of 10000 characters g
 
 #### Results
 
-AI take 1m12.70360255s
-Mine take 1m55.538962265s
+AI      -> 1m12.70360255s
+Mine    -> 1m55.538962265s
+Mine V2 -> 1m53.148561364s
 
 #### Conclusion
-My code is slower, i need to improve it, maybe I can launch multiple different instances of "check" that act on a different "repetitions" variable so it act like I have multiple simultaneous accesses to the variable; this would likely provide increased speed but greatly decrease the readability and maintainability of the code.
-Or maybe I can try using mutex (this is the actual V2)
+My code is slower, i need to improve it, maybe I can try using mutex (this is the actual V2).
+Speed is improved but not soo many, maybe I can launch multiple different instances of "check" that act on a different "repetitions" variable so it act like I have multiple simultaneous accesses to the variable; this would likely provide increased speed but greatly decrease the readability and maintainability of the code.
 
 ### Third test
 
@@ -29,9 +30,9 @@ For the last test I run the code only 1000 times but with a random string of 100
 
 #### Results
 
-AI -> 1m19.027777264s
-Mine -> 1m54.305495528s
-
+AI      -> 1m19.027777264s
+Mine    -> 1m54.305495528s
+Mine V2 -> 1m50.087691372s
 
 
 PS. I could have removed screen printing but since it also does that part of delivery and the two implementations aren't quite the same I decided to leave it
