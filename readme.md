@@ -5,6 +5,6 @@ For all test I'm useing my private server, it's  a DELL Precision 5810 in partic
 | RAM | 32 GB ECC DDR4 (8*4GB) |
 | GPU | NVIDIA Quadro M4000 8GB | 
 
-With Ubuntu, it has installed only docker (not running), and is an embded.
+With Ubuntu, it has installed only docker (not running), i'm accessing the machine thanks ssh.
 
 In idle it has like 0.3% CPU usage that is really low
