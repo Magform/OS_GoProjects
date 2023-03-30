@@ -9,6 +9,7 @@ In the first test I'll execute both codes 1000000 times in series and I'm going 
 AI      -> 1m35.249918511s
 Mine    -> 52.783684107s
 Mine V2 -> 51.757870603s
+Mine V3 -> 51.221640471s
 
 ### Second test
 
@@ -19,10 +20,11 @@ Now I try to run the code 10000 times with a random string of 10000 characters g
 AI      -> 1m12.70360255s
 Mine    -> 1m55.538962265s
 Mine V2 -> 1m53.148561364s
+Mine V3 -> 30.717897205s
 
 #### Conclusion
-My code is slower, i need to improve it, maybe I can try using mutex (this is the actual V2).
-Speed is improved but not soo many, maybe I can launch multiple different instances of "check" that act on a different "repetitions" variable so it act like I have multiple simultaneous accesses to the variable; this would likely provide increased speed but greatly decrease the readability and maintainability of the code.
+My code is slower, I need to improve it, maybe I can try using mutexes (this is V2).
+Speed has improved but not that much, maybe I can launch multiple different instances of "check" that act on a different "repetitions" variable so that it behaves as if I have multiple concurrent accesses to the variable; this would likely provide increased speed but greatly reduce the readability and maintainability of the code. I'm still going to do this just to see if I can beat the AI (this is V3).
 
 ### Third test
 
@@ -33,6 +35,12 @@ For the last test I run the code only 1000 times but with a random string of 100
 AI      -> 1m19.027777264s
 Mine    -> 1m54.305495528s
 Mine V2 -> 1m50.087691372s
+Mine V3 -> 24.040814471s
+
+### Final comment
+
+I only managed to beat the AI by using a trick that doesn't actually make the execution faster. I simply identified that the bottleneck was due to the innumerable simultaneous accesses to the "repetitions" variable so I went to create more, in my case 3, but hypothetically I could use one per letter to get the maximum speed but, for now, I am satisfied with this.
+Another thing we can notice is how the code is much faster in processing very long strings rather than in processing many strings, this is precisely due to the fact that V3 can write string data in 3 different variables. 
 
 
 PS. I could have removed screen printing but since it also does that part of delivery and the two implementations aren't quite the same I decided to leave it
