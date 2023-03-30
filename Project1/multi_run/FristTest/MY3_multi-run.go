@@ -76,8 +76,8 @@ func code() {
 
 	var len int = len(whereSearch)
 	var s1 = whereSearch[0 : len/3]
-	var s2 = whereSearch[len/3 : (len-len/3)/2]
-	var s3 = whereSearch[(len-len/3)/2 : len-(len-len/3)/2]
+	var s2 = whereSearch[len/3 : len/3+(len-len/3)/2]
+	var s3 = whereSearch[len/3+(len-len/3)/2 : len]
 
 	wg.Add(3)
 	go t1(s1, &wg)
