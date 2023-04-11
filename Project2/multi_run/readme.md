@@ -20,6 +20,8 @@ In the second test I'll execute both codes 1000 times in series and I'm going to
 
 #### Results
 
-AI V2   -> 
+AI V2   -> 3m53.879023764s
 Mine    -> 
 
+#### Conclusions
+Anche qua ho avuto il problema di prima con i tempi molto simili
