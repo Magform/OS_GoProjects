@@ -8,14 +8,15 @@ In the first test I'll execute both codes 1000000 times in series and I'm going 
 #### Results
 
 AI      -> Deadlock
-AI V2   -> 
-Mine    -> 
+AI V2   -> 5m15.099525898s
+Mine    -> 4m40.774016825s
 
 #### Conclusions
+Il primo codice dell'AI lancia un deadlock quando si prova ad accedere in concorrenza su [var] gli ho quindi chiesto di fixarlo.
+Nell'esecuzione dell'AI V2 ho notato che i tempi dei due codici sono molto simili, ho quindi provveduto ad aumentare le esecuzioni fino ad avere una differenza di tempi significativa, (ho comunque eseguito entrmbi i codici un paio di volte e sembra che il mio abbia una varianza tra i tempi piú elevata ma per esserne sicuri servirebbero molte piú esecuzioni)
 
-
-### Frist test
-In the first test I'll execute both codes 10000 times in series and I'm going to visualize the total execution time, the total client number is 1000 and there are 3 different types of vehicles
+### Second test
+In the second test I'll execute both codes 1000 times in series and I'm going to visualize the total execution time, the total client number is 1000 and there are 3 different types of vehicles
 
 #### Results
 
