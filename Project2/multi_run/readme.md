@@ -10,18 +10,34 @@ In the first test I'll execute both codes 1000000 times in series and I'm going 
 AI      -> Deadlock
 AI V2   -> 5m15.099525898s
 Mine    -> 4m40.774016825s
+Mine V2 -> 4m53.180019476s
 
 #### Conclusions
 Il primo codice dell'AI lancia un deadlock quando si prova ad accedere in concorrenza su [var] gli ho quindi chiesto di fixarlo.
 Nell'esecuzione dell'AI V2 ho notato che i tempi dei due codici sono molto simili, ho quindi provveduto ad aumentare le esecuzioni fino ad avere una differenza di tempi significativa, (ho comunque eseguito entrmbi i codici un paio di volte e sembra che il mio abbia una varianza tra i tempi piú elevata ma per esserne sicuri servirebbero molte piú esecuzioni)
+Ho provato poi a vedere se riuscivo a rendere il codice ancora piú veloce utilizzando un atomicInc invece di un mutex ma la velocitá sembra essere circa costante visto che il codice non esegue moltissime attivitá in parallelo ma potrebbe dare un boost nei test sucessivi
 
 ### Second test
 In the second test I'll execute both codes 1000 times in series and I'm going to visualize the total execution time, the total client number is 1000 and there are 3 different types of vehicles
 
 #### Results
 
-AI V2   -> 3m53.879023764s
-Mine    -> 
+
+AI V2   -> 3m46.077063869s
+Mine    -> 3m41.250022498s
+Mine V2 -> 3m42.511494126s
 
 #### Conclusions
-Anche qua ho avuto il problema di prima con i tempi molto simili
+Anche qua si notano tempi molto simili e diversi tra vari test, dovrei quindi effettuare un esecuzione piú lunga troppo per poter dire con sicurezza qual'é la soluzione piú veloce
+
+### Third test
+In the third test I'll execute both codes 100000 times in series and I'm going to visualize the total execution time, the total client number is 10 and there are 1000 different types of vehicles
+
+#### Results
+
+
+AI V2   -> 
+Mine    ->
+Mine V2 -> 
+
+#### Conclusions

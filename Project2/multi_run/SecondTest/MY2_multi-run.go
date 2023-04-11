@@ -26,7 +26,6 @@ func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]Veicolo) {
 }
 
 func code() {
-	defer timer("main")() //to see esecution time
 	rand.Seed(time.Now().UnixNano())
 
 	veicoliDisponibili := []Veicolo{
