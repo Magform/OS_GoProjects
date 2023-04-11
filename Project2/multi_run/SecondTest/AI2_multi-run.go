@@ -18,7 +18,6 @@ type Veicolo struct {
 }
 
 func code() {
-
 	// Inizializzazione del generatore di numeri casuali
 	rand.Seed(time.Now().UnixNano())
 
@@ -30,27 +29,21 @@ func code() {
 	}
 
 	// Definizione dei clienti
-	clienti := []Cliente{
-		{nome: "Mario"},
-		{nome: "Luigi"},
-		{nome: "Peach"},
-		{nome: "Bowser"},
-		{nome: "Yoshi"},
-		{nome: "Toad"},
-		{nome: "Wario"},
-		{nome: "Waluigi"},
-		{nome: "Donkey Kong"},
-		{nome: "Daisy"},
-	}
+	clienti := generateClients(1000)
 
 	// Array per memorizzare i veicoli noleggiati
 	noleggiati := make(map[string]int)
+
+	// Mutex per proteggere l'accesso alla mappa noleggiati
+	var mu sync.Mutex
 
 	// Funzione per noleggiare un veicolo a caso
 	noleggia := func(c Cliente, wg *sync.WaitGroup) {
 		defer wg.Done()
 		v := veicoli[rand.Intn(len(veicoli))]
+		mu.Lock()
 		noleggiati[v.tipo]++
+		mu.Unlock()
 		fmt.Printf("%s ha noleggiato il veicolo %s\n", c.nome, v.tipo)
 	}
 
@@ -85,9 +78,23 @@ func timer(name string) func() {
 	}
 }
 
+// function to generate clients
+func generateClients(k int) []Cliente {
+	nomi := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
+	rand.Seed(time.Now().UnixNano())
+
+	clienti := make([]Cliente, k)
+	for i := 0; i < k; i++ {
+		nome := nomi[rand.Intn(len(nomi))]
+		clienti[i] = Cliente{nome: nome}
+	}
+
+	return clienti
+}
+
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1000000; i++ {
 		code()
 	}
 }

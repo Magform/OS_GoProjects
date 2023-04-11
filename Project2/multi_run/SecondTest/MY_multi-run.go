@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
-	"sync/atomic"
 	"time"
 )
 
@@ -13,14 +12,17 @@ type Cliente struct {
 }
 type Veicolo struct {
 	tipo     string
-	utilized int32
+	utilized int
+	mutex    sync.Mutex
 }
 
 func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]Veicolo) {
 	defer wg.Done()
 	var v int = rand.Intn(len(*veicoli))
 
-	atomic.AddInt32(&(*veicoli)[v].utilized, 1)
+	(*veicoli)[v].mutex.Lock()
+	(*veicoli)[v].utilized++
+	(*veicoli)[v].mutex.Unlock()
 
 	fmt.Printf("%s ha noleggiato il veicolo %s\n", needRent.nome, (*veicoli)[v].tipo)
 }
@@ -37,18 +39,7 @@ func code() {
 			utilized: 0},
 	}
 
-	clienti := []Cliente{
-		{nome: "Mario"},
-		{nome: "Luigi"},
-		{nome: "Peach"},
-		{nome: "Bowser"},
-		{nome: "Yoshi"},
-		{nome: "Toad"},
-		{nome: "Wario"},
-		{nome: "Waluigi"},
-		{nome: "Donkey Kong"},
-		{nome: "Daisy"},
-	}
+	clienti := generateClients(1000)
 
 	var wg sync.WaitGroup
 
@@ -72,9 +63,23 @@ func timer(name string) func() {
 	}
 }
 
+// function to generate clients
+func generateClients(k int) []Cliente {
+	nomi := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
+	rand.Seed(time.Now().UnixNano())
+
+	clienti := make([]Cliente, k)
+	for i := 0; i < k; i++ {
+		nome := nomi[rand.Intn(len(nomi))]
+		clienti[i] = Cliente{nome: nome}
+	}
+
+	return clienti
+}
+
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1000000; i++ {
 		code()
 	}
 }
