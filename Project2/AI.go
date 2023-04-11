@@ -47,11 +47,16 @@ func main() {
 	// Array per memorizzare i veicoli noleggiati
 	noleggiati := make(map[string]int)
 
+	// Mutex per proteggere l'accesso alla mappa noleggiati
+	var mu sync.Mutex
+
 	// Funzione per noleggiare un veicolo a caso
 	noleggia := func(c Cliente, wg *sync.WaitGroup) {
 		defer wg.Done()
 		v := veicoli[rand.Intn(len(veicoli))]
+		mu.Lock()
 		noleggiati[v.tipo]++
+		mu.Unlock()
 		fmt.Printf("%s ha noleggiato il veicolo %s\n", c.nome, v.tipo)
 	}
 
