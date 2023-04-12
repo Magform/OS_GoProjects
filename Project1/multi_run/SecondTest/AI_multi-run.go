@@ -29,7 +29,7 @@ func countOccurrences(s string, c byte, wg *sync.WaitGroup, count chan int) {
 }
 
 func code() {
-	s := RandStringBytes(10000)
+	s := RandStringBytes(100000)
 	c := byte('c')
 	var wg sync.WaitGroup
 	count := make(chan int)

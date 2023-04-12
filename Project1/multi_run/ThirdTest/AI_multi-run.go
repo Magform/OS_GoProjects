@@ -29,7 +29,7 @@ func countOccurrences(s string, c byte, wg *sync.WaitGroup, count chan int) {
 }
 
 func code() {
-	s := RandStringBytes(100000)
+	s := RandStringBytes(10000000)
 	c := byte('c')
 	var wg sync.WaitGroup
 	count := make(chan int)
@@ -50,7 +50,7 @@ func code() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 100; i++ {
 		code()
 	}
 }

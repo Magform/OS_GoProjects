@@ -34,7 +34,7 @@ func check(caracter string, wg *sync.WaitGroup) {
 func code() {
 	var wg sync.WaitGroup
 	repetitions = 0
-	var whereSearch string = RandStringBytes(10000)
+	var whereSearch string = RandStringBytes(100000)
 	for _, c := range whereSearch {
 		wg.Add(1)
 		go check(string(c), &wg)

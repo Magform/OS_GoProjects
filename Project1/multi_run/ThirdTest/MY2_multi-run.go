@@ -34,7 +34,7 @@ func check(caracter string, wg *sync.WaitGroup) {
 func code() {
 	var wg sync.WaitGroup
 	repetitions = 0
-	var whereSearch string = RandStringBytes(100000)
+	var whereSearch string = RandStringBytes(10000000)
 	for _, c := range whereSearch {
 		wg.Add(1)
 		go check(string(c), &wg)
@@ -46,7 +46,7 @@ func code() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 100; i++ {
 		code()
 	}
 }

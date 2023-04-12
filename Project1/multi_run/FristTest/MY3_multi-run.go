@@ -91,7 +91,7 @@ func code() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 1000000; i++ {
+	for i := 0; i < 10000000; i++ {
 		code()
 	}
 }

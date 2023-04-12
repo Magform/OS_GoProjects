@@ -82,7 +82,7 @@ func code() {
 	repetitions2 = 0
 	repetitions3 = 0
 	var wg sync.WaitGroup
-	var whereSearch string = RandStringBytes(10000)
+	var whereSearch string = RandStringBytes(100000)
 
 	var len int = len(whereSearch)
 	var s1 = whereSearch[0 : len/3]

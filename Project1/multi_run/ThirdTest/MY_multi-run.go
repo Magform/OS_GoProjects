@@ -29,7 +29,7 @@ func check(caracter string, repetitions chan int, wg *sync.WaitGroup) {
 }
 
 func code() {
-	var whereSearch string = RandStringBytes(100000)
+	var whereSearch string = RandStringBytes(10000000)
 	results := make(chan int, 1)
 	results <- 0
 
@@ -46,7 +46,7 @@ func code() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 100; i++ {
 		code()
 	}
 }
