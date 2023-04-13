@@ -18,12 +18,12 @@ var (
 	cooks         = make(chan struct{}, numCooks)
 	decorators    = make(chan struct{}, numDecorators)
 	icers         = make(chan struct{}, numIcers)
-	cookTime      = 1 * time.Second
-	icerTime      = 4 * time.Second
-	decoratorTime = 8 * time.Second
+	cookTime      = (1 * time.Second) / 100
+	icerTime      = (4 * time.Second) / 100
+	decoratorTime = (8 * time.Second) / 100
 )
 
-func main() {
+func code() {
 	fmt.Println("Starting cake production")
 	var wg sync.WaitGroup
 
@@ -39,7 +39,6 @@ func main() {
 
 func cookCake(cakeID int, wg *sync.WaitGroup) {
 	cooks <- struct{}{}
-
 	fmt.Printf("Cooking cake %d\n", cakeID)
 
 	time.Sleep(cookTime)
@@ -87,4 +86,20 @@ func decorateCake(cakeID int, wg *sync.WaitGroup) {
 func getNextCakeID() int {
 	cakeCounter++
 	return cakeCounter
+}
+
+// To see esecution time
+func timer(name string) func() {
+	start := time.Now()
+	return func() {
+		fmt.Printf("%s took %v\n", name, time.Since(start))
+	}
+}
+
+func main() {
+	defer timer("main")() //to see esecution time
+	for i := 0; i < 1000; i++ {
+		cakeCounter = 0
+		code()
+	}
 }

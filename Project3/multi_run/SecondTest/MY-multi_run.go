@@ -34,16 +34,18 @@ func (s *semaphore) Occupied() int {
 	return s.occupied
 }
 
+const torte = 1000
+
 var Pasticciere1_spazi = costructor(2)
 var Pasticciere2_spazi = costructor(2)
 
-var cookTime = 1 * time.Second
-var icerTime = 4 * time.Second
-var decoratorTime = 8 * time.Second
+var cookTime = (1 * time.Second) / 100
+var icerTime = (4 * time.Second) / 100
+var decoratorTime = (8 * time.Second) / 100
 
-var torte1 = 5
-var torte2 = 5
-var torte3 = 5
+var torte1 = torte
+var torte2 = torte
+var torte3 = torte
 
 var wg sync.WaitGroup
 
@@ -83,8 +85,7 @@ func Pasticciere3() {
 	wg.Done()
 }
 
-func main() {
-	defer timer("main")() //to see esecution time
+func code() {
 	go Pasticciere1()
 	go Pasticciere2()
 	go Pasticciere3()
@@ -97,5 +98,15 @@ func timer(name string) func() {
 	start := time.Now()
 	return func() {
 		fmt.Printf("%s took %v\n", name, time.Since(start))
+	}
+}
+
+func main() {
+	defer timer("main")() //to see esecution time
+	for i := 0; i < 10; i++ {
+		torte1 = torte
+		torte2 = torte
+		torte3 = torte
+		code()
 	}
 }
