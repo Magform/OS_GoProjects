@@ -1,0 +1,3 @@
+Il codice podrotto dal bot, dopo innummerovoli "errori di battitura" da parte sua, lancia deadlock.
+Il codice che ha prodotto ora sembra funzionare, anche se, a detta mia non proprio come dovrebbe, inoltre sembra non fermarsi mai.
+Ho preso in mano la situazione e risolto tutti i problemi del codice scritto da ChatGPT (che oramai é scritto piú da me che da lui) ed ora funziona correttamente ed é anche migliore di quello che ho scritto io all'inizio
