@@ -16,7 +16,9 @@ var n int
 
 func check(caracter string, wg *sync.WaitGroup, n int) {
 	if caracter == toSearch {
-		repetitions[n]++
+		repetitions[n] = 1
+	} else {
+		repetitions[n] = 0
 	}
 	defer wg.Done()
 }
