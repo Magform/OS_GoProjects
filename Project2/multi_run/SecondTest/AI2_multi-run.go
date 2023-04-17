@@ -29,7 +29,7 @@ func code() {
 	}
 
 	// Definizione dei clienti
-	clienti := generateClients(1000)
+	clienti := generateClients(10000)
 
 	// Array per memorizzare i veicoli noleggiati
 	noleggiati := make(map[string]int)
@@ -94,7 +94,7 @@ func generateClients(k int) []Cliente {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 1000; i++ {
 		code()
 	}
 }
