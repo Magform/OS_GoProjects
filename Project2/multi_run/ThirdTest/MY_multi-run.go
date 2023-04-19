@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -16,7 +17,7 @@ type Veicolo struct {
 	mutex    sync.Mutex
 }
 
-func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]Veicolo) {
+func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]*Veicolo) {
 	defer wg.Done()
 	var v int = rand.Intn(len(*veicoli))
 
@@ -30,16 +31,9 @@ func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]Veicolo) {
 func code() {
 	rand.Seed(time.Now().UnixNano())
 
-	veicoliDisponibili := []Veicolo{
-		{tipo: "Berlina",
-			utilized: 0},
-		{tipo: "SUV",
-			utilized: 0},
-		{tipo: "Station Wagon",
-			utilized: 0},
-	}
+	veicoliDisponibili := generateVeicles(10000)
 
-	clienti := generateClients(100000)
+	clienti := generateClients(10)
 
 	var wg sync.WaitGroup
 
@@ -50,9 +44,12 @@ func code() {
 
 	wg.Wait()
 
-	fmt.Printf("Berline noleggiate: %d\n", veicoliDisponibili[0].utilized)
-	fmt.Printf("SUV noleggiate: %d\n", veicoliDisponibili[1].utilized)
-	fmt.Printf("Station Wagon noleggiate: %d\n", veicoliDisponibili[2].utilized)
+	for _, c := range veicoliDisponibili {
+		c.mutex.Lock()
+		defer c.mutex.Unlock()
+
+		fmt.Printf("%s noleggiate: %d\n", c.tipo, c.utilized)
+	}
 }
 
 // To see esecution time
@@ -77,9 +74,33 @@ func generateClients(k int) []Cliente {
 	return clienti
 }
 
+func generateVeicles(k int) []*Veicolo {
+	tipi := []string{"Berlina", "Suv", "StationWagon"}
+	rand.Seed(time.Now().UnixNano())
+
+	veicoli := make([]*Veicolo, k)
+	nextNumber := make(map[string]int)
+
+	for i := 0; i < k; i++ {
+		veicolo := tipi[rand.Intn(len(tipi))]
+
+		// Genera un nuovo nome unico per il veicolo
+		name := veicolo
+		if nextNumber[veicolo] > 0 {
+			name += strconv.Itoa(nextNumber[veicolo])
+		}
+		nextNumber[veicolo]++
+
+		veicoli[i] = &Veicolo{tipo: name,
+			utilized: 0}
+	}
+
+	return veicoli
+}
+
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 2000; i++ {
+	for i := 0; i < 1000; i++ {
 		code()
 	}
 }

@@ -77,7 +77,7 @@ func generateClients(k int) []Cliente {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 2000; i++ {
 		code()
 	}
 }
