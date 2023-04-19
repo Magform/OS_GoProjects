@@ -17,10 +17,10 @@ Now I try to run the code 10000 times with a random string of 100000 characters 
 
 #### Results
 
-AI      -> 
-Mine    -> 
-Mine V2 -> 
-Mine V3 -> 
+AI      -> 13m32.995996718s
+Mine    -> 19m5.086632872s
+Mine V2 -> 18m25.519745637s
+Mine V3 -> 4m16.07750622s
 
 #### Conclusion
 My code is slower, I need to improve it, maybe I can try using mutexes (this is V2).
@@ -32,15 +32,22 @@ For the last test I run the code only 100 times but with a random string of 1000
 
 #### Results
 
-AI      -> 1m19.027777264s
-Mine    -> 1m54.305495528s
-Mine V2 -> 1m50.087691372s
-Mine V3 -> 24.040814471s
+AI      -> 21m47.054311037s
+Mine    -> 17m26.153838886s
+Mine V2 -> 17m10.924859735s
+Mine V3 -> 3m37.370729103s
 
 ### Final comment
 
 I only managed to beat the AI by using a trick that doesn't actually make the execution faster. I simply identified that the bottleneck was due to the innumerable simultaneous accesses to the "repetitions" variable so I went to create more, in my case 3, but hypothetically I could use one per letter to get the maximum speed but, for now, I am satisfied with this.
 Another thing we can notice is how the code is much faster in processing very long strings rather than in processing many strings, this is precisely due to the fact that V3 can write string data in 3 different variables. 
 
+### Another code
+I had another idea so I try to implement this that is a sort of variant code V3 pretty better (using an array instead of multiple variable)
 
-PS. I could have removed screen printing but since it also does that part of delivery and the two implementations aren't quite the same I decided to leave it
+#### Frist Test
+->
+#### Second Test
+->
+#### Third Test
+->
