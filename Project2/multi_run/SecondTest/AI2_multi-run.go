@@ -29,7 +29,7 @@ func code() {
 	}
 
 	// Definizione dei clienti
-	clienti := generateClients(10000)
+	clienti := generateClients(100000)
 
 	// Array per memorizzare i veicoli noleggiati
 	noleggiati := make(map[string]int)

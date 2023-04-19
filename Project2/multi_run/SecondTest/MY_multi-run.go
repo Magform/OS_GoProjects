@@ -39,7 +39,7 @@ func code() {
 			utilized: 0},
 	}
 
-	clienti := generateClients(10000)
+	clienti := generateClients(100000)
 
 	var wg sync.WaitGroup
 
