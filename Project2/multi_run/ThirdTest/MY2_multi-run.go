@@ -31,7 +31,7 @@ func code() {
 
 	veicoliDisponibili := generateVeicles(10000)
 
-	clienti := generateClients(10)
+	clienti := generateClients(1000)
 
 	var wg sync.WaitGroup
 
