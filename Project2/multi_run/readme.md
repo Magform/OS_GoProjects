@@ -8,9 +8,9 @@ In the first test I'll execute both codes 10000000 times in series and I'm going
 #### Results
 
 AI      -> Deadlock
-AI V2   -> 5m15.099525898s
-Mine    -> 4m40.774016825s
-Mine V2 -> 4m53.180019476s
+AI V2   -> 20m27.015952257s
+Mine    -> 18m57.872829815s
+Mine V2 -> 17m41.73568466s
 
 #### Conclusions
 Il primo codice dell'AI lancia un deadlock quando si prova ad accedere in concorrenza su [var] gli ho quindi chiesto di fixarlo.
@@ -18,26 +18,27 @@ Nell'esecuzione dell'AI V2 ho notato che i tempi dei due codici sono molto simil
 Ho provato poi a vedere se riuscivo a rendere il codice ancora piú veloce utilizzando un atomicInc invece di un mutex ma la velocitá sembra essere circa costante visto che il codice non esegue moltissime attivitá in parallelo ma potrebbe dare un boost nei test sucessivi
 
 ### Second test
-In the second test I'll execute both codes 1000 times in series and I'm going to visualize the total execution time, the total client number is 10000 and there are 3 different types of vehicles
+In the second test I'll execute both codes 2000 times in series and I'm going to visualize the total execution time, the total client number is 100000 and there are 3 different types of vehicles
 
 #### Results
 
-
-AI V2   -> 3m46.077063869s
-Mine    -> 3m41.250022498s
-Mine V2 -> 3m42.511494126s
+AI V2   -> 11m24.456537961s
+Mine    -> 11m19.65053013s
+Mine V2 -> 11m16.344166135s
 
 #### Conclusions
 Anche qua si notano tempi molto simili e diversi tra vari test, dovrei quindi effettuare un esecuzione piú lunga troppo per poter dire con sicurezza qual'é la soluzione piú veloce
 
 ### Third test
-In the third test I'll execute both codes 100000 times in series and I'm going to visualize the total execution time, the total client number is 10 and there are 1000 different types of vehicles
+In the third test I'll execute both codes 10000 times in series and I'm going to visualize the total execution time, the total client number is 1000 and there are 10000 different types of vehicles
 
 #### Results
 
 
-AI V2   -> 
-Mine    ->
-Mine V2 -> 
+AI V2   -> 8m25.147346509s
+Mine    -> 9m25.124509044s
+Mine V2 -> 8m32.70290091s
 
 #### Conclusions
+
+Il bot qua risulta notevolmente piú veloce del mio codice in V1 e leggermente piú potente della V2 (anche se questo potrebbe essere dovuto alla diversa generazione dei valori random)
