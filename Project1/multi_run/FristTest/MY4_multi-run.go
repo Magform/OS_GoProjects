@@ -14,8 +14,8 @@ var repetitions [100000000]int
 
 var n int
 
-func check(caracter string, wg *sync.WaitGroup, n int) {
-	if caracter == toSearch {
+func check(character string, wg *sync.WaitGroup, n int) {
+	if character == toSearch {
 		repetitions[n] = 1
 	} else {
 		repetitions[n] = 0

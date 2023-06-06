@@ -17,8 +17,8 @@ var repetitions1 int = 0
 var repetitions2 int = 0
 var repetitions3 int = 0
 
-func check1(caracter string, wg *sync.WaitGroup) {
-	if caracter == toSearch {
+func check1(character string, wg *sync.WaitGroup) {
+	if character == toSearch {
 		mutex1.Lock()
 		repetitions1++
 		mutex1.Unlock()
@@ -26,8 +26,8 @@ func check1(caracter string, wg *sync.WaitGroup) {
 	defer wg.Done()
 }
 
-func check2(caracter string, wg *sync.WaitGroup) {
-	if caracter == toSearch {
+func check2(character string, wg *sync.WaitGroup) {
+	if character == toSearch {
 		mutex2.Lock()
 		repetitions2++
 		mutex2.Unlock()
@@ -35,8 +35,8 @@ func check2(caracter string, wg *sync.WaitGroup) {
 	defer wg.Done()
 }
 
-func check3(caracter string, wg *sync.WaitGroup) {
-	if caracter == toSearch {
+func check3(character string, wg *sync.WaitGroup) {
+	if character == toSearch {
 		mutex3.Lock()
 		repetitions3++
 		mutex3.Unlock()

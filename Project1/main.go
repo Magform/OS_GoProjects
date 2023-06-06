@@ -8,8 +8,8 @@ import (
 const toSearch string = "c"
 const whereSearch string = "aaaaaaaaaaaaabbbbbbbbcccccddddccccccfff"
 
-func check(caracter string, repetitions chan int, wg *sync.WaitGroup) {
-	if caracter == toSearch {
+func check(character string, repetitions chan int, wg *sync.WaitGroup) {
+	if character == toSearch {
 		rep := <-repetitions
 		rep++
 		repetitions <- rep

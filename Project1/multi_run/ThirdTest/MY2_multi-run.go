@@ -22,8 +22,8 @@ func RandStringBytes(n int) string {
 var mutex sync.Mutex
 var repetitions int = 0
 
-func check(caracter string, wg *sync.WaitGroup) {
-	if caracter == toSearch {
+func check(character string, wg *sync.WaitGroup) {
+	if character == toSearch {
 		mutex.Lock()
 		repetitions++
 		mutex.Unlock()
