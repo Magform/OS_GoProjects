@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 const toSearch string = "c"
@@ -69,7 +68,6 @@ func t3(s1 string, wg *sync.WaitGroup) {
 }
 
 func main() {
-	defer timer("main")() //to see esecution time
 	repetitions1 = 0
 	repetitions2 = 0
 	repetitions3 = 0
@@ -88,12 +86,4 @@ func main() {
 	wg.Wait()
 	var repetitions = repetitions1 + repetitions2 + repetitions3
 	fmt.Printf("Il carattere cercato compare %d volte nella stringa.\n", repetitions)
-}
-
-// To see esecution time
-func timer(name string) func() {
-	start := time.Now()
-	return func() {
-		fmt.Printf("%s took %v\n", name, time.Since(start))
-	}
 }

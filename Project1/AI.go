@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 func countOccurrences(s string, c byte, wg *sync.WaitGroup, count chan int) {
@@ -18,7 +17,6 @@ func countOccurrences(s string, c byte, wg *sync.WaitGroup, count chan int) {
 }
 
 func main() {
-	defer timer("main")() //to see esecution time
 	s := "aaaaaaaaaaaaabbbbbbbbcccccddddccccccfff"
 	c := byte('c')
 	var wg sync.WaitGroup
@@ -36,12 +34,4 @@ func main() {
 		totalOccurrences += occurrences
 	}
 	fmt.Printf("Il carattere %c compare %d volte nella stringa.\n", c, totalOccurrences)
-}
-
-// To see esecution time
-func timer(name string) func() {
-	start := time.Now()
-	return func() {
-		fmt.Printf("%s took %v\n", name, time.Since(start))
-	}
 }
