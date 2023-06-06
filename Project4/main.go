@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -61,18 +60,9 @@ func selectPair() {
 }
 
 func main() {
-	defer timer("main")() //to see esecution time
 	rand.Seed(time.Now().UnixNano())
 	go simulateMarketData()
 	go selectPair()
 	time.Sleep(60 * time.Second)
 
-}
-
-// To see esecution time
-func timer(name string) func() {
-	start := time.Now()
-	return func() {
-		fmt.Printf("%s took %v\n", name, time.Since(start))
-	}
 }
