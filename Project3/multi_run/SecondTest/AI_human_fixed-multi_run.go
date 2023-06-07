@@ -39,6 +39,7 @@ func code() {
 
 func cookCake(cakeID int, wg *sync.WaitGroup) {
 	cooks <- struct{}{}
+
 	fmt.Printf("Cooking cake %d\n", cakeID)
 
 	time.Sleep(cookTime)

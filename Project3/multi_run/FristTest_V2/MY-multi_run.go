@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
 type semaphore struct {
 	instances chan struct{}
-	occupied  int
+	occupied  int64
 }
 
 func costructor(n int) *semaphore {
@@ -21,55 +22,55 @@ func costructor(n int) *semaphore {
 // acquire n resources
 func (s *semaphore) P() {
 	s.instances <- struct{}{}
-	s.occupied++
+	atomic.AddInt64(&s.occupied, 1)
 }
 
 // release n resources
 func (s *semaphore) V() {
 	<-s.instances
-	s.occupied--
+	atomic.AddInt64(&s.occupied, -1)
 }
 
-func (s *semaphore) Occupied() int {
+func (s *semaphore) Occupied() int64 {
 	return s.occupied
 }
 
-var Pasticciere1_spazi = costructor(2)
-var Pasticciere2_spazi = costructor(2)
-
-var torte1 = 5
-var torte2 = 5
-var torte3 = 5
+var pastryChef1_spaces = costructor(2)
+var pastryChef2_spaces = costructor(2)
+var totalCake = 5
 
 var wg sync.WaitGroup
 
-// cucinatore
-func Pasticciere1() {
-	for torte1 > 0 {
-		Pasticciere1_spazi.P()
-		torte1--
+// cook
+func pastryChef1() {
+	cakes := 1
+	for totalCake >= cakes {
+		pastryChef1_spaces.P()
+		cakes++
 	}
 	wg.Done()
 }
 
-// guarnitore
-func Pasticciere2() {
-	for torte2 > 0 {
-		if Pasticciere1_spazi.Occupied() > 0 {
-			Pasticciere2_spazi.P()
-			Pasticciere1_spazi.V()
-			torte2--
+// icer
+func pastryChef2() {
+	cakes := 1
+	for totalCake >= cakes {
+		if pastryChef1_spaces.Occupied() > 0 {
+			pastryChef2_spaces.P()
+			pastryChef1_spaces.V()
+			cakes++
 		}
 	}
 	wg.Done()
 }
 
-// decoratore
-func Pasticciere3() {
-	for torte3 > 0 {
-		if Pasticciere2_spazi.Occupied() > 0 {
-			Pasticciere2_spazi.V()
-			torte3--
+// decorator
+func pastryChef3() {
+	cakes := 1
+	for totalCake >= cakes {
+		if pastryChef2_spaces.Occupied() > 0 {
+			pastryChef2_spaces.V()
+			cakes++
 		}
 	}
 
@@ -77,9 +78,9 @@ func Pasticciere3() {
 }
 
 func code() {
-	go Pasticciere1()
-	go Pasticciere2()
-	go Pasticciere3()
+	go pastryChef1()
+	go pastryChef2()
+	go pastryChef3()
 	wg.Add(3)
 	wg.Wait()
 }
@@ -95,9 +96,6 @@ func timer(name string) func() {
 func main() {
 	defer timer("main")() //to see esecution time
 	for i := 0; i < 100000; i++ {
-		torte1 = 5
-		torte2 = 5
-		torte3 = 5
 		code()
 	}
 }
