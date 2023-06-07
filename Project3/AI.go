@@ -12,12 +12,13 @@ const numDecorators = 1
 const numIcers = 1
 
 var (
-	cakeCounter   int
-	cookSpace     = make(chan struct{}, 2)
-	icerSpace     = make(chan struct{}, 2)
-	decoratorTime = 8 * time.Second
-	cookTime      = time.Second
-	icerTime      = 4 * time.Second
+	cakeCounter    int
+	cookSpace      = make(chan struct{}, 2)
+	icerSpace      = make(chan struct{}, 2)
+	decoratorSpace = make(chan struct{}, 2)
+	cookTime       = time.Second
+	icerTime       = 4 * time.Second
+	decoratorTime  = 8 * time.Second
 )
 
 func main() {
@@ -46,9 +47,14 @@ func cookCake(wg *sync.WaitGroup) {
 
 	fmt.Printf("Finished cooking cake %d\n", cakeID)
 
-	icerSpace <- struct{}{} // wait for icer space
-	wg.Add(1)
-	go iceCake(cakeID, wg)
+	select {
+	case icerSpace <- struct{}{}:
+		wg.Add(1)
+		go iceCake(cakeID, wg)
+	case cookSpace <- struct{}{}:
+		wg.Add(1)
+		go cookCake(wg)
+	}
 }
 
 func iceCake(cakeID int, wg *sync.WaitGroup) {
@@ -60,9 +66,15 @@ func iceCake(cakeID int, wg *sync.WaitGroup) {
 
 	fmt.Printf("Finished icing cake %d\n", cakeID)
 
-	icerSpace <- struct{}{} // wait for decorator space
-	wg.Add(1)
-	go decorateCake(cakeID, wg)
+	select {
+	case decoratorSpace <- struct{}{}:
+		wg.Add(1)
+		go decorateCake(cakeID, wg)
+	case icerSpace <- struct{}{}:
+		wg.Add(1)
+		go iceCake(cakeID, wg)
+	}
+	<-icerSpace // free up icer space
 }
 
 func decorateCake(cakeID int, wg *sync.WaitGroup) {
@@ -74,9 +86,20 @@ func decorateCake(cakeID int, wg *sync.WaitGroup) {
 
 	fmt.Printf("Finished decorating cake %d\n", cakeID)
 
-	<-cookSpace // free up cook space
-	<-icerSpace // free up icer space
-	cakeCounter++
+	select {
+	case <-cookSpace:
+		cakeCounter++
+		if cakeCounter == numCakes {
+			wg.Done()
+			return
+		}
+		wg.Add(1)
+		go cookCake(wg)
+	case decoratorSpace <- struct{}{}:
+		wg.Add(1)
+		go decorateCake(cakeID, wg)
+	}
+	<-decoratorSpace // free up decorator space
 }
 
 func getNextCakeID() int {
