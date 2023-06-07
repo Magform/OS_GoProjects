@@ -45,3 +45,25 @@ echo "Test 3"
 go run ./Project2/multi_run/ThirdTest/AI_multi-run.go | tail -n 1
 go run ./Project2/multi_run/ThirdTest/MY_multi-run.go | tail -n 1
 go run ./Project2/multi_run/ThirdTest/MY2_multi-run.go | tail -n 1
+
+echo "Project 3"
+
+echo "Test 1"
+
+go run ./Project3/multi_run/FristTest/AI-humanFixed_multi-run.go | tail -n 1
+go run ./Project3/multi_run/FristTest/MY_multi-run.go | tail -n 1
+
+echo "Test 1 V2"
+
+go run ./Project3/multi_run/FristTest_V2/AI-humanFixed_multi-run.go | tail -n 1
+go run ./Project3/multi_run/FristTest_V2/MY_multi-run.go | tail -n 1
+
+echo "Test 2 "
+
+go run ./Project3/multi_run/SecondTest/AI-humanFixed_multi-run.go | tail -n 1
+go run ./Project3/multi_run/SecondTest/MY_multi-run.go | tail -n 1
+
+echo "Test 2 V2"
+
+go run ./Project3/multi_run/SecondTest_V2/AI-humanFixed_multi-run.go | tail -n 1
+go run ./Project3/multi_run/SecondTest_V2/MY_multi-run.go | tail -n 1
