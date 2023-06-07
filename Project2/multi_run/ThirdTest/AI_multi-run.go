@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -17,7 +18,7 @@ type Vehicle struct {
 	model string
 }
 
-func main() {
+func code() {
 	// Initialize the random number generator
 	rand.Seed(time.Now().UnixNano())
 
@@ -72,11 +73,61 @@ func main() {
 
 	// Function to print the number of rented Berline, SUV, and Station Wagons
 	print := func() {
-		fmt.Printf("Rented Berline: %d\n", rented["Berlina"])
-		fmt.Printf("Rented SUVs: %d\n", rented["SUV"])
-		fmt.Printf("Rented Station Wagons: %d\n", rented["Station Wagon"])
+		for _, c := range vehicles {
+			fmt.Printf("%s noleggiate: %d\n", c.model, rented[c.model])
+		}
 	}
 
 	// Print the number of rented vehicles
 	print()
+}
+
+// To see esecution time
+func timer(name string) func() {
+	start := time.Now()
+	return func() {
+		fmt.Printf("%s took %v\n", name, time.Since(start))
+	}
+}
+
+// function to generate clients
+func generateClients(k int) []Client {
+	names := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
+	rand.Seed(time.Now().UnixNano())
+
+	clients := make([]Client, k)
+	for i := 0; i < k; i++ {
+		name := names[rand.Intn(len(names))]
+		clients[i] = Client{name: name}
+	}
+
+	return clients
+}
+
+func generateVeicles(k int) []Vehicle {
+	models := []string{"Berlina", "Suv", "StationWagon"}
+	rand.Seed(time.Now().UnixNano())
+
+	vehicles := make([]Vehicle, k)
+	nextNumber := make(map[string]int)
+
+	for i := 0; i < k; i++ {
+		vehicle := models[rand.Intn(len(models))]
+		name := vehicle
+		if nextNumber[vehicle] > 0 {
+			name += strconv.Itoa(nextNumber[vehicle])
+		}
+		nextNumber[vehicle]++
+
+		vehicles[i] = Vehicle{model: name}
+	}
+
+	return vehicles
+}
+
+func main() {
+	defer timer("main")() //to see esecution time
+	for i := 0; i < 10000; i++ {
+		code()
+	}
 }

@@ -17,7 +17,7 @@ type Vehicle struct {
 	model string
 }
 
-func main() {
+func code() {
 	// Initialize the random number generator
 	rand.Seed(time.Now().UnixNano())
 
@@ -29,18 +29,7 @@ func main() {
 	}
 
 	// Define the clients
-	clients := []Client{
-		{name: "Mario"},
-		{name: "Luigi"},
-		{name: "Peach"},
-		{name: "Bowser"},
-		{name: "Yoshi"},
-		{name: "Toad"},
-		{name: "Wario"},
-		{name: "Waluigi"},
-		{name: "Donkey Kong"},
-		{name: "Daisy"},
-	}
+	clients := generateClients(100000)
 
 	// Map to store the rented vehicles
 	rented := make(map[string]int)
@@ -79,4 +68,33 @@ func main() {
 
 	// Print the number of rented vehicles
 	print()
+}
+
+// To see esecution time
+func timer(name string) func() {
+	start := time.Now()
+	return func() {
+		fmt.Printf("%s took %v\n", name, time.Since(start))
+	}
+}
+
+// function to generate clients
+func generateClients(k int) []Client {
+	names := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
+	rand.Seed(time.Now().UnixNano())
+
+	clients := make([]Client, k)
+	for i := 0; i < k; i++ {
+		name := names[rand.Intn(len(names))]
+		clients[i] = Client{name: name}
+	}
+
+	return clients
+}
+
+func main() {
+	defer timer("main")() //to see esecution time
+	for i := 0; i < 2000; i++ {
+		code()
+	}
 }

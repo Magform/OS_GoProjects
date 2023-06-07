@@ -9,42 +9,39 @@ import (
 	"time"
 )
 
-type Cliente struct {
-	nome string
-}
-type Veicolo struct {
-	tipo     string
+type Vehicle struct {
+	model    string
 	utilized int32
 }
 
-func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]*Veicolo) {
+func noleggia(needRent string, wg *sync.WaitGroup, vehicle *[]*Vehicle) {
 	defer wg.Done()
-	var v int = rand.Intn(len(*veicoli))
+	var v int = rand.Intn(len(*vehicle))
 
-	atomic.AddInt32(&(*veicoli)[v].utilized, 1)
+	atomic.AddInt32(&(*vehicle)[v].utilized, 1)
 
-	fmt.Printf("%s ha noleggiato il veicolo %s\n", needRent.nome, (*veicoli)[v].tipo)
+	fmt.Printf("%s has rented the vehicle %s\n", needRent, (*vehicle)[v].model)
 }
 
 func code() {
 	rand.Seed(time.Now().UnixNano())
 
-	veicoliDisponibili := generateVeicles(10000)
+	vehiclesAvailable := generateVeicles(10000)
 
-	clienti := generateClients(1000)
+	clients := generateClients(1000)
 
 	var wg sync.WaitGroup
 
-	for _, c := range clienti {
+	for _, c := range clients {
 		wg.Add(1)
-		go noleggia(c, &wg, &veicoliDisponibili)
+		go noleggia(c, &wg, &vehiclesAvailable)
 	}
 
 	wg.Wait()
 
-	for _, c := range veicoliDisponibili {
+	for _, c := range vehiclesAvailable {
 
-		fmt.Printf("%s noleggiate: %d\n", c.tipo, c.utilized)
+		fmt.Printf("%s noleggiate: %d\n", c.model, c.utilized)
 	}
 }
 
@@ -57,41 +54,38 @@ func timer(name string) func() {
 }
 
 // function to generate clients
-func generateClients(k int) []Cliente {
-	nomi := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
+func generateClients(k int) []string {
+	names := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
 	rand.Seed(time.Now().UnixNano())
 
-	clienti := make([]Cliente, k)
+	clients := make([]string, k)
 	for i := 0; i < k; i++ {
-		nome := nomi[rand.Intn(len(nomi))]
-		clienti[i] = Cliente{nome: nome}
+		clients[i] = names[rand.Intn(len(names))]
 	}
 
-	return clienti
+	return clients
 }
 
-func generateVeicles(k int) []*Veicolo {
-	tipi := []string{"Berlina", "Suv", "StationWagon"}
+func generateVeicles(k int) []*Vehicle {
+	models := []string{"Berlina", "Suv", "StationWagon"}
 	rand.Seed(time.Now().UnixNano())
 
-	veicoli := make([]*Veicolo, k)
+	vehicles := make([]*Vehicle, k)
 	nextNumber := make(map[string]int)
 
 	for i := 0; i < k; i++ {
-		veicolo := tipi[rand.Intn(len(tipi))]
+		vehicle := models[rand.Intn(len(models))]
 
-		// Genera un nuovo nome unico per il veicolo
-		name := veicolo
-		if nextNumber[veicolo] > 0 {
-			name += strconv.Itoa(nextNumber[veicolo])
+		name := vehicle
+		if nextNumber[vehicle] > 0 {
+			name += strconv.Itoa(nextNumber[vehicle])
 		}
-		nextNumber[veicolo]++
+		nextNumber[vehicle]++
 
-		veicoli[i] = &Veicolo{tipo: name,
-			utilized: 0}
+		vehicles[i] = &Vehicle{model: name, utilized: 0}
 	}
 
-	return veicoli
+	return vehicles
 }
 
 func main() {

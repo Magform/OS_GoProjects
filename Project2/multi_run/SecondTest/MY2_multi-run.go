@@ -8,49 +8,63 @@ import (
 	"time"
 )
 
-type Cliente struct {
-	nome string
-}
-type Veicolo struct {
-	tipo     string
+type Vehicle struct {
+	model    string
 	utilized int32
 }
 
-func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]Veicolo) {
+func noleggia(needRent string, wg *sync.WaitGroup, vehicle *[]Vehicle) {
 	defer wg.Done()
-	var v int = rand.Intn(len(*veicoli))
+	var v int = rand.Intn(len(*vehicle))
 
-	atomic.AddInt32(&(*veicoli)[v].utilized, 1)
+	atomic.AddInt32(&(*vehicle)[v].utilized, 1)
 
-	fmt.Printf("%s ha noleggiato il veicolo %s\n", needRent.nome, (*veicoli)[v].tipo)
+	fmt.Printf("%s has rented the vehicle %s\n", needRent, (*vehicle)[v].model)
 }
 
 func code() {
 	rand.Seed(time.Now().UnixNano())
 
-	veicoliDisponibili := []Veicolo{
-		{tipo: "Berlina",
-			utilized: 0},
-		{tipo: "SUV",
-			utilized: 0},
-		{tipo: "Station Wagon",
-			utilized: 0},
+	vehiclesAvailable := []Vehicle{
+		{model: "Berlina", utilized: 0},
+		{model: "SUV", utilized: 0},
+		{model: "Station Wagon", utilized: 0},
 	}
 
-	clienti := generateClients(100000)
+	clients := generateClients(100000)
 
 	var wg sync.WaitGroup
 
-	for _, c := range clienti {
+	for _, c := range clients {
 		wg.Add(1)
-		go noleggia(c, &wg, &veicoliDisponibili)
+		go noleggia(c, &wg, &vehiclesAvailable)
 	}
 
 	wg.Wait()
 
-	fmt.Printf("Berline noleggiate: %d\n", veicoliDisponibili[0].utilized)
-	fmt.Printf("SUV noleggiate: %d\n", veicoliDisponibili[1].utilized)
-	fmt.Printf("Station Wagon noleggiate: %d\n", veicoliDisponibili[2].utilized)
+	fmt.Printf("Rented Berline: %d\n", vehiclesAvailable[0].utilized)
+	fmt.Printf("Rented SUVs: %d\n", vehiclesAvailable[1].utilized)
+	fmt.Printf("Rented Station Wagons: %d\n", vehiclesAvailable[2].utilized)
+}
+
+// function to generate clients
+func generateClients(k int) []string {
+	names := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
+	rand.Seed(time.Now().UnixNano())
+
+	clients := make([]string, k)
+	for i := 0; i < k; i++ {
+		clients[i] = names[rand.Intn(len(names))]
+	}
+
+	return clients
+}
+
+func main() {
+	defer timer("main")() //to see esecution time
+	for i := 0; i < 2000; i++ {
+		code()
+	}
 }
 
 // To see esecution time
@@ -58,26 +72,5 @@ func timer(name string) func() {
 	start := time.Now()
 	return func() {
 		fmt.Printf("%s took %v\n", name, time.Since(start))
-	}
-}
-
-// function to generate clients
-func generateClients(k int) []Cliente {
-	nomi := []string{"Mario", "Luigi", "Peach", "Bowser", "Yoshi", "Toad", "Wario", "Waluigi", "Donkey Kong", "Daisy"}
-	rand.Seed(time.Now().UnixNano())
-
-	clienti := make([]Cliente, k)
-	for i := 0; i < k; i++ {
-		nome := nomi[rand.Intn(len(nomi))]
-		clienti[i] = Cliente{nome: nome}
-	}
-
-	return clienti
-}
-
-func main() {
-	defer timer("main")() //to see esecution time
-	for i := 0; i < 2000; i++ {
-		code()
 	}
 }

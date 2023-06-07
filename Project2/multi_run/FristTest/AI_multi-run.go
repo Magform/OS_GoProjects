@@ -7,74 +7,78 @@ import (
 	"time"
 )
 
-// struttura Cliente con il campo "nome"
-type Cliente struct {
-	nome string
+// Client structure with the
+type Client struct {
+	name string
 }
 
-// struttura Veicolo con il campo "tipo"
-type Veicolo struct {
-	tipo string
+// Vehicle  structure with the
+type Vehicle struct {
+	model string
 }
 
 func code() {
-
-	// Inizializzazione del generatore di numeri casuali
+	// Initialize the random number generator
 	rand.Seed(time.Now().UnixNano())
 
-	// Definizione dei veicoli disponibili
-	veicoli := []Veicolo{
-		{tipo: "Berlina"},
-		{tipo: "SUV"},
-		{tipo: "Station Wagon"},
+	// Define the available vehicles
+	vehicles := []Vehicle{
+		{model: "Berlina"},
+		{model: "SUV"},
+		{model: "Station Wagon"},
 	}
 
-	// Definizione dei clienti
-	clienti := []Cliente{
-		{nome: "Mario"},
-		{nome: "Luigi"},
-		{nome: "Peach"},
-		{nome: "Bowser"},
-		{nome: "Yoshi"},
-		{nome: "Toad"},
-		{nome: "Wario"},
-		{nome: "Waluigi"},
-		{nome: "Donkey Kong"},
-		{nome: "Daisy"},
+	// Define the clients
+	clients := []Client{
+		{name: "Mario"},
+		{name: "Luigi"},
+		{name: "Peach"},
+		{name: "Bowser"},
+		{name: "Yoshi"},
+		{name: "Toad"},
+		{name: "Wario"},
+		{name: "Waluigi"},
+		{name: "Donkey Kong"},
+		{name: "Daisy"},
 	}
 
-	// Array per memorizzare i veicoli noleggiati
-	noleggiati := make(map[string]int)
+	// Map to store the rented vehicles
+	rented := make(map[string]int)
 
-	// Funzione per noleggiare un veicolo a caso
-	noleggia := func(c Cliente, wg *sync.WaitGroup) {
+	// Mutex to protect access to the rented map
+	var mu sync.Mutex
+
+	// Function to rent a random vehicle
+	rent := func(c Client, wg *sync.WaitGroup) {
 		defer wg.Done()
-		v := veicoli[rand.Intn(len(veicoli))]
-		noleggiati[v.tipo]++
-		fmt.Printf("%s ha noleggiato il veicolo %s\n", c.nome, v.tipo)
+		v := vehicles[rand.Intn(len(vehicles))]
+		mu.Lock()
+		rented[v.model]++
+		mu.Unlock()
+		fmt.Printf("%s has rented the vehicle %s\n", c.name, v.model)
 	}
 
-	// Sincronizzatore di gruppi di goroutine
+	// Synchronizer for groups of goroutines
 	var wg sync.WaitGroup
 
-	// Noleggio dei veicoli per tutti i clienti
-	for _, c := range clienti {
+	// Rent vehicles for all clients
+	for _, c := range clients {
 		wg.Add(1)
-		go noleggia(c, &wg)
+		go rent(c, &wg)
 	}
 
-	// Attende il completamento di tutte le goroutine
+	// Wait for all goroutines to complete
 	wg.Wait()
 
-	// Funzione per stampare il numero di Berline, SUV e Station Wagon noleggiati
-	stampa := func() {
-		fmt.Printf("Berline noleggiate: %d\n", noleggiati["Berlina"])
-		fmt.Printf("SUV noleggiate: %d\n", noleggiati["SUV"])
-		fmt.Printf("Station Wagon noleggiate: %d\n", noleggiati["Station Wagon"])
+	// Function to print the number of rented Berline, SUV, and Station Wagons
+	print := func() {
+		fmt.Printf("Rented Berline: %d\n", rented["Berlina"])
+		fmt.Printf("Rented SUVs: %d\n", rented["SUV"])
+		fmt.Printf("Rented Station Wagons: %d\n", rented["Station Wagon"])
 	}
 
-	// Stampa del numero di veicoli noleggiati
-	stampa()
+	// Print the number of rented vehicles
+	print()
 }
 
 // To see esecution time
@@ -87,7 +91,7 @@ func timer(name string) func() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 1000000; i++ {
+	for i := 0; i < 10000000; i++ {
 		code()
 	}
 }

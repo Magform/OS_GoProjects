@@ -7,63 +7,57 @@ import (
 	"time"
 )
 
-type Cliente struct {
-	nome string
-}
-type Veicolo struct {
-	tipo     string
+type Vehicle struct {
+	model    string
 	utilized int
 	mutex    sync.Mutex
 }
 
-func noleggia(needRent Cliente, wg *sync.WaitGroup, veicoli *[]Veicolo) {
+func rent(needRent string, wg *sync.WaitGroup, vehicles *[]Vehicle) {
 	defer wg.Done()
-	var v int = rand.Intn(len(*veicoli))
+	var v int = rand.Intn(len(*vehicles))
 
-	(*veicoli)[v].mutex.Lock()
-	(*veicoli)[v].utilized++
-	(*veicoli)[v].mutex.Unlock()
+	(*vehicles)[v].mutex.Lock()
+	(*vehicles)[v].utilized++
+	(*vehicles)[v].mutex.Unlock()
 
-	fmt.Printf("%s ha noleggiato il veicolo %s\n", needRent.nome, (*veicoli)[v].tipo)
+	fmt.Printf("%s has rented the vehicle %s\n", needRent, (*vehicles)[v].model)
 }
 
 func code() {
 	rand.Seed(time.Now().UnixNano())
 
-	veicoliDisponibili := []Veicolo{
-		{tipo: "Berlina",
-			utilized: 0},
-		{tipo: "SUV",
-			utilized: 0},
-		{tipo: "Station Wagon",
-			utilized: 0},
+	vehiclesAvailable := []Vehicle{
+		{model: "Berlina", utilized: 0},
+		{model: "SUV", utilized: 0},
+		{model: "Station Wagon", utilized: 0},
 	}
 
-	clienti := []Cliente{
-		{nome: "Mario"},
-		{nome: "Luigi"},
-		{nome: "Peach"},
-		{nome: "Bowser"},
-		{nome: "Yoshi"},
-		{nome: "Toad"},
-		{nome: "Wario"},
-		{nome: "Waluigi"},
-		{nome: "Donkey Kong"},
-		{nome: "Daisy"},
+	clients := []string{
+		"Mario",
+		"Luigi",
+		"Peach",
+		"Bowser",
+		"Yoshi",
+		"Toad",
+		"Wario",
+		"Waluigi",
+		"Donkey Kong",
+		"Daisy",
 	}
 
 	var wg sync.WaitGroup
 
-	for _, c := range clienti {
+	for _, c := range clients {
 		wg.Add(1)
-		go noleggia(c, &wg, &veicoliDisponibili)
+		go rent(c, &wg, &vehiclesAvailable)
 	}
 
 	wg.Wait()
 
-	fmt.Printf("Berline noleggiate: %d\n", veicoliDisponibili[0].utilized)
-	fmt.Printf("SUV noleggiate: %d\n", veicoliDisponibili[1].utilized)
-	fmt.Printf("Station Wagon noleggiate: %d\n", veicoliDisponibili[2].utilized)
+	fmt.Printf("Rented Berline: %d\n", vehiclesAvailable[0].utilized)
+	fmt.Printf("Rented SUVs: %d\n", vehiclesAvailable[1].utilized)
+	fmt.Printf("Rented Station Wagons: %d\n", vehiclesAvailable[2].utilized)
 }
 
 // To see esecution time
