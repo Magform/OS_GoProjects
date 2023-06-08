@@ -1,6 +1,6 @@
 # OS_GoProject
 ## Idea
-During my university course on Operating Systems, I was assigned four projects to be implemented using the Go programming language. In addition to completing them myself, I also decided to challenge an artificial intelligence (ChatGPT-3.5) to solve the same projects, aiming to achieve better execution times with my own software (ignoring memory usage).
+During my university course on Operating Systems, I was assigned four projects to be implemented using the Go programming language.
 
 ## Projects
 
@@ -59,8 +59,20 @@ Create a function named "selectPair" that uses a "select" statement to handle bu
 
 The program should execute the trading cycle for one minute and terminate at the end of the cycle.
 
-## Testing machine
+## Testing
+In addition to completing them myself, I also decided to challenge an artificial intelligence (ChatGPT-3.5) to solve the same projects, aiming to achieve better execution times with my own software.
 
+### Test execution methods
+To run the various tests I went to create special go programs, found in the "multi_run" folder of each project.
+These programs run the code multiple times in series, allowing for accurate performance evaluation. Additionally, I have developed different test versions with minor modifications to identify cases where one approach outperforms another. 
+In the same folder there is also a readme where there are the results of the tests on my machine and some considerations.
+
+### Test command
+To streamline the execution of tests, I have created a convenient bash file named "grepTime.sh". This file allows you to run all the tests effortlessly.
+To use it, simply make "grepTime.sh" executable by running chmod +x grepTime.sh, and then execute it to obtain the test times. As the tests can be time-consuming, I recommend saving the output to a file and running the script in the background using the command ./grepTime.sh > out.txt &. 
+Please note that the fourth code of the second test in the first project has a significantly longer execution time. If you prefer to keep the test times reasonably short, I recommend removing that specific code from the bash file before executing it.
+
+### Testing Machine
 For all tests, I am using my private server, a DELL Precision 5810 with the following specifications:
 |  |  |
 |--------------|-----------|
@@ -68,4 +80,4 @@ For all tests, I am using my private server, a DELL Precision 5810 with the foll
 | RAM | 32 GB ECC DDR4 (8*4GB) |
 | GPU | NVIDIA Quadro M4000 8GB | 
 
-The server runs Ubuntu as its operating system, and I access it via SSH. In idle state, it typically has around 0.3% CPU usage.
+The server runs Ubuntu as its operating system, and I access it via SSH. In idle state, it typically has around 0.2% CPU usage.
