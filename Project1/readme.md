@@ -25,7 +25,7 @@ We did this to decrease the average waiting time to access the variable that cou
 After launching all the goroutines, the main function waits for all goroutines to finish using wg.Wait(). Finally, it retrieves the final count from the repetitions variable and prints it as the number of times the desired character appears in the string.
 
 ### Problems and considerations 
-Now we are going to use three different instances of the function but hypothetically if we were going to use more the code would become even faster up to a maximum limit after which the sum of the various variables becomes more time expensive than the time gained
+Now we are going to use three different instances of the function but hypothetically if we were going to use more the code would become even faster up to a maximum limit after which the sum of the various variables becomes more time expensive than the time gained.
 
 ## Main V4
 This version of the code snippet uses a sync.WaitGroup to synchronize the goroutines and a mutex to ensure that the variable containing the character count is not concurrently modified by multiple goroutines.
@@ -38,4 +38,4 @@ We did this to decrease the average waiting time to access the variable that cou
 After launching all the goroutines, the main function waits for all goroutines to finish using wg.Wait(). Finally, it retrieves the final count from the repetitions variable and prints it as the number of times the desired character appears in the string.
 
 ### Problems and considerations 
-As previously highlighted, here we go beyond the maximum limit where having more variables for various characters is advantageous since the sum of the various variables becomes more expensive than the time gained by not using mutexes
+As previously highlighted, here we go beyond the maximum limit where having more variables for various characters is advantageous since the sum of the various variables becomes more expensive than the time gained by not using mutexes.
