@@ -52,18 +52,22 @@ echo "Test 1"
 
 go run ./Project3/multi_run/FristTest/AI-HumanFixed_multi-run.go | tail -n 1
 go run ./Project3/multi_run/FristTest/MY_multi-run.go | tail -n 1
+go run ./Project3/multi_run/FristTest/MYV_multi-run.go | tail -n 1
 
 echo "Test 1 V2"
 
 go run ./Project3/multi_run/FristTest_V2/AI-HumanFixed_multi-run.go | tail -n 1
 go run ./Project3/multi_run/FristTest_V2/MY_multi-run.go | tail -n 1
+go run ./Project3/multi_run/FristTest_V2/MYV_multi-run.go | tail -n 1
 
 echo "Test 2 "
 
 go run ./Project3/multi_run/SecondTest/AI-HumanFixed_multi-run.go | tail -n 1
 go run ./Project3/multi_run/SecondTest/MY_multi-run.go | tail -n 1
+go run ./Project3/multi_run/SecondTest/MYV_multi-run.go | tail -n 1
 
 echo "Test 2 V2"
 
 go run ./Project3/multi_run/SecondTest_V2/AI-HumanFixed_multi-run.go | tail -n 1
 go run ./Project3/multi_run/SecondTest_V2/MY_multi-run.go | tail -n 1
+go run ./Project3/multi_run/SecondTest_V2/MYV_multi-run.go | tail -n 1
