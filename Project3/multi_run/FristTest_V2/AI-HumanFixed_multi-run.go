@@ -90,7 +90,7 @@ func timer(name string) func() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1000000; i++ {
 		cakeCounter = 0
 		code()
 	}

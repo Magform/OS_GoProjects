@@ -38,10 +38,7 @@ func (s *semaphore) Occupied() int64 {
 var pastryChef1_spaces = costructor(2)
 var pastryChef2_spaces = costructor(2)
 
-var cookTime = (1 * time.Second) / 100
-var icerTime = (4 * time.Second) / 100
-var decoratorTime = (8 * time.Second) / 100
-var totalCake = 1000
+var totalCake = 5
 
 var wg sync.WaitGroup
 
@@ -49,7 +46,8 @@ var wg sync.WaitGroup
 func pastryChef1() {
 	cakes := 1
 	for totalCake >= cakes {
-		time.Sleep(cookTime)
+		fmt.Printf("Cooking cake %d\n", cakes)
+		fmt.Printf("Finished cooking cake %d\n", cakes)
 		pastryChef1_spaces.P()
 		cakes++
 	}
@@ -61,7 +59,8 @@ func pastryChef2() {
 	cakes := 1
 	for totalCake >= cakes {
 		if pastryChef1_spaces.Occupied() > 0 {
-			time.Sleep(icerTime)
+			fmt.Printf("Icing cake %d\n", cakes)
+			fmt.Printf("Finished icing cake %d\n", cakes)
 			pastryChef2_spaces.P()
 			pastryChef1_spaces.V()
 			cakes++
@@ -75,7 +74,8 @@ func pastryChef3() {
 	cakes := 1
 	for totalCake >= cakes {
 		if pastryChef2_spaces.Occupied() > 0 {
-			time.Sleep(decoratorTime)
+			fmt.Printf("Decorating cake %d\n", cakes)
+			fmt.Printf("Finished decorating cake %d\n", cakes)
 			pastryChef2_spaces.V()
 			cakes++
 		}
@@ -85,11 +85,13 @@ func pastryChef3() {
 }
 
 func code() {
+	fmt.Println("Starting cake production")
 	go pastryChef1()
 	go pastryChef2()
 	go pastryChef3()
 	wg.Add(3)
 	wg.Wait()
+	fmt.Println("All cakes produced")
 }
 
 // To see esecution time
@@ -102,7 +104,7 @@ func timer(name string) func() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 1000000; i++ {
 		code()
 	}
 }

@@ -38,7 +38,7 @@ func (s *semaphore) Occupied() int64 {
 var pastryChef1_spaces = costructor(2)
 var pastryChef2_spaces = costructor(2)
 
-var totalCake = 5
+var totalCake = 1000
 
 var wg sync.WaitGroup
 

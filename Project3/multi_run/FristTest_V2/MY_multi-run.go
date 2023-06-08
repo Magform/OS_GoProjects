@@ -37,6 +37,7 @@ func (s *semaphore) Occupied() int64 {
 
 var pastryChef1_spaces = costructor(2)
 var pastryChef2_spaces = costructor(2)
+
 var totalCake = 5
 
 var wg sync.WaitGroup
@@ -95,7 +96,7 @@ func timer(name string) func() {
 
 func main() {
 	defer timer("main")() //to see esecution time
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1000000; i++ {
 		code()
 	}
 }

@@ -38,9 +38,9 @@ func (s *semaphore) Occupied() int64 {
 var pastryChef1_spaces = costructor(2)
 var pastryChef2_spaces = costructor(2)
 
-var cookTime = (1 * time.Second) / 100
-var icerTime = (4 * time.Second) / 100
-var decoratorTime = (8 * time.Second) / 100
+var cookTime = 1 * time.Second
+var icerTime = 4 * time.Second
+var decoratorTime = 8 * time.Second
 var totalCake = 5
 
 var wg sync.WaitGroup
