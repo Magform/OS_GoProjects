@@ -24,7 +24,7 @@ func rent(needRent string, wg *sync.WaitGroup, vehicles *[]Vehicle) {
 	fmt.Printf("%s has rented the vehicle %s\n", needRent, (*vehicles)[v].model)
 }
 
-func code() {
+func code(clients []string) {
 	rand.Seed(time.Now().UnixNano())
 
 	vehiclesAvailable := []Vehicle{
@@ -32,8 +32,6 @@ func code() {
 		{model: "SUV", utilized: 0},
 		{model: "Station Wagon", utilized: 0},
 	}
-
-	clients := generateClients(100000)
 
 	var wg sync.WaitGroup
 
@@ -72,7 +70,8 @@ func generateClients(k int) []string {
 
 func main() {
 	defer timer("main")() //to see esecution time
+	clients := generateClients(100000)
 	for i := 0; i < 2000; i++ {
-		code()
+		code(clients)
 	}
 }

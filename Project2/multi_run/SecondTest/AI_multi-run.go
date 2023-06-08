@@ -17,7 +17,7 @@ type Vehicle struct {
 	model string
 }
 
-func code() {
+func code(clients []Client) {
 	// Initialize the random number generator
 	rand.Seed(time.Now().UnixNano())
 
@@ -27,9 +27,6 @@ func code() {
 		{model: "SUV"},
 		{model: "Station Wagon"},
 	}
-
-	// Define the clients
-	clients := generateClients(100000)
 
 	// Map to store the rented vehicles
 	rented := make(map[string]int)
@@ -94,7 +91,8 @@ func generateClients(k int) []Client {
 
 func main() {
 	defer timer("main")() //to see esecution time
+	clients := generateClients(100000)
 	for i := 0; i < 2000; i++ {
-		code()
+		code(clients)
 	}
 }
