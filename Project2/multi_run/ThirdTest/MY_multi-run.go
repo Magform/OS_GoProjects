@@ -40,7 +40,7 @@ func code(vehiclesAvailable []*Vehicle, clients []string) {
 		c.mutex.Lock()
 		defer c.mutex.Unlock()
 
-		fmt.Printf("%s noleggiate: %d\n", c.model, c.utilized)
+		fmt.Printf("%s rented: %d\n", c.model, c.utilized)
 	}
 }
 

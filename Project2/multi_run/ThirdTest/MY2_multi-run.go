@@ -37,7 +37,7 @@ func code(vehiclesAvailable []*Vehicle, clients []string) {
 
 	for _, c := range vehiclesAvailable {
 
-		fmt.Printf("%s noleggiate: %d\n", c.model, c.utilized)
+		fmt.Printf("%s rented: %d\n", c.model, c.utilized)
 	}
 }
 

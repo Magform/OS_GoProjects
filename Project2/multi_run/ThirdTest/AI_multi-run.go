@@ -53,7 +53,7 @@ func code(vehicles []Vehicle, clients []Client) {
 	// Function to print the number of rented Berline, SUV, and Station Wagons
 	print := func() {
 		for _, c := range vehicles {
-			fmt.Printf("%s noleggiate: %d\n", c.model, rented[c.model])
+			fmt.Printf("%s rented: %d\n", c.model, rented[c.model])
 		}
 	}
 
