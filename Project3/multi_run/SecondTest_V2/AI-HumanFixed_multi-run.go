@@ -59,7 +59,7 @@ func iceCake(cakeID int, wg *sync.WaitGroup) {
 	wg.Add(1)
 	go decorateCake(cakeID, wg)
 
-	<-cookedSpace // free up icer space
+	<-cookedSpace
 	<-icers
 	defer wg.Done()
 }
@@ -70,7 +70,7 @@ func decorateCake(cakeID int, wg *sync.WaitGroup) {
 
 	fmt.Printf("Finished decorating cake %d\n", cakeID)
 
-	<-iceredSpace // free up decorator space
+	<-iceredSpace
 	<-decorators
 	defer wg.Done()
 }
