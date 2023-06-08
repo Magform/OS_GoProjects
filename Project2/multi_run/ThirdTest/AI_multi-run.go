@@ -23,25 +23,9 @@ func code() {
 	rand.Seed(time.Now().UnixNano())
 
 	// Define the available vehicles
-	vehicles := []Vehicle{
-		{model: "Berlina"},
-		{model: "SUV"},
-		{model: "Station Wagon"},
-	}
+	vehicles := generateVeicles(10000)
 
-	// Define the clients
-	clients := []Client{
-		{name: "Mario"},
-		{name: "Luigi"},
-		{name: "Peach"},
-		{name: "Bowser"},
-		{name: "Yoshi"},
-		{name: "Toad"},
-		{name: "Wario"},
-		{name: "Waluigi"},
-		{name: "Donkey Kong"},
-		{name: "Daisy"},
-	}
+	clients := generateClients(1000)
 
 	// Map to store the rented vehicles
 	rented := make(map[string]int)
