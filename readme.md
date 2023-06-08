@@ -70,7 +70,6 @@ In the same folder there is also a readme where there are the results of the tes
 ### Test command
 To streamline the execution of tests, I have created a convenient bash file named "grepTime.sh". This file allows you to run all the tests effortlessly.
 To use it, simply make "grepTime.sh" executable by running chmod +x grepTime.sh, and then execute it to obtain the test times. As the tests can be time-consuming, I recommend saving the output to a file and running the script in the background using the command ./grepTime.sh > out.txt &. 
-Please note that the fourth code of the second test in the first project has a significantly longer execution time. If you prefer to keep the test times reasonably short, I recommend removing that specific code from the bash file before executing it.
 
 ### Testing Machine
 For all tests, I am using my private server, a DELL Precision 5810 with the following specifications:
