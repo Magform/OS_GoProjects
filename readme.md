@@ -63,7 +63,7 @@ The program should execute the trading cycle for one minute and terminate at the
 In addition to completing them myself, I also decided to challenge an artificial intelligence (ChatGPT-3.5) to solve the same projects, aiming to achieve better execution times with my own software.
 
 ### Test execution methods
-To run the various tests I went to create special go programs, found in the "multi_run" folder of each project.
+To run the various tests I went to create special go programs, found in the "tests" folder of each project.
 These programs run the code multiple times in series, allowing for accurate performance evaluation. Additionally, I have developed different test versions with minor modifications to identify cases where one approach outperforms another. 
 In the same folder there is also a readme where there are the results of the tests on my machine and some considerations.
 
